@@ -44,7 +44,7 @@ html, body {
     POKEMON CARD TOP HALF 
 **************************/
 .pokemon-card-top-half {
-  /* border: 2px solid blue; */
+  border: 2px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,7 +59,7 @@ html, body {
 }
 
 .pokemon-image {
-  background-color: antiquewhite;
+  background-color: blue;
   height: 150px;
   padding-inline: 2em;
   place-self: center;
@@ -75,15 +75,21 @@ text-align: center;
 }
 
 @media (min-width: 600px) {
-  .pokemon-name {
+  .pokemon-card-top-half {
+    justify-content: space-evenly;
+  }
 
+  .pokemon-name {
+    font-size: 1.5rem;
+    padding-left: 4.5em;
   }
 
   .pokemon-image {
-
+    height: 275px;
+    width: 275px;
   }
   .pokemon-stats {
-
+    font-size: .85rem;
   }
 }
 
