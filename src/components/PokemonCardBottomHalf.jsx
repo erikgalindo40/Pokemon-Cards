@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { PokemonContext } from '../App'
 
 function PokemonCardBottomHalf() {
+  const {pokemonGeneralData, pokemonTypeData} = useContext(PokemonContext)
+
   return (
     <div className="pokemon-card-bottom-half">
       <div className="pokemon-move-name">
-        Double-Slap
+        {pokemonGeneralData?.moves?.[0]?.move?.name}
       </div>
       <div className="pokemon-move-power">
-        90
+        {pokemonGeneralData?.stats?.[1]?.base_stat}
       </div>
     </div>
   )

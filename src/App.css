@@ -15,7 +15,6 @@ html, body {
   place-items: center;
   min-height: 100vh;
   min-height: 100dvh;
-  /* background-color: grey; */
 }
 
 :root {
@@ -26,6 +25,31 @@ html, body {
   --large-pokemon-card-width: 30em;
   --large-pokemon-card-height: 45em;
 }
+
+/**************************
+          BUTTONS 
+**************************/
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 20em;
+}
+
+.change-index-button {
+  box-shadow: 10px 10px 10px black;
+  padding: 1em;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: white;
+  background-color: var(--pokemon-blue);
+  outline: 5px solid var(--pokemon-yellow);
+  transition: scale 200ms ease-in-out;
+}
+
+.change-index-button:hover {
+  scale: 1.1;
+}
+
 
 /**************************
         POKEMON CARD 
@@ -40,7 +64,6 @@ html, body {
   place-items: center;
   grid-template-rows: 60% 1fr;
 
-  /* background-color: var(--pokemon-blue); */
   background: rgb(249,127,42);
   background: radial-gradient(circle, rgba(249,127,42,1) 0%, rgba(242,199,133,1) 50%, rgb(221, 65, 45) 100%);
 }
@@ -76,20 +99,42 @@ html, body {
   justify-content: space-between;
 }
 
-.pokemon-name {
+.pokemon-name-and-health {
+  display: flex;
+  justify-content: space-between;
   font-size: 1.1rem;
   font-weight: bolder;
 }
 
+.pokemon-health {
+  color: rgb(219, 4, 4);
+}
+
 .pokemon-image {
-  background-color: white;
-  height: 150px;
-  padding-inline: 2em;
+  background-color: black;
+  color: white;
   place-self: center;
+  position: relative;
+  width: 12em;
+
+  box-shadow: 9px 9px 12px black;
+  border: 5px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+  border-image-source: linear-gradient(to top, rgba(192,140,41,1), rgb(230, 211, 128));
+}
+
+.pokemon-image img {
+  position: relative;
+  z-index: 1;
+  height: 100px;
+  width: 100%;
+  object-fit: cover;
+  vertical-align: middle;
 }
 
 .pokemon-stats {
-  margin-top: .3em;
+  margin-top: .9em;
   background: rgb(192,140,41);
   background: linear-gradient(90deg, rgba(192,140,41,1) 0%, rgba(252,233,145,1) 52%, rgba(192,140,41,1) 100%);
   max-width: 80%;
@@ -103,14 +148,19 @@ html, body {
 }
 
 @media (min-width: 600px) {
-  .pokemon-name {
+  .pokemon-name-and-health {
     font-size: 1.7rem;
   }
 
   .pokemon-image {
-    height: 275px;
-    padding-inline: 6em;
+    width: 23em;
+    padding-inline: 5em;
   }
+
+  .pokemon-image img {
+    height: 200px;
+  }
+
   .pokemon-stats {
     padding-block: .3em;
     padding-inline: 1.5em;
