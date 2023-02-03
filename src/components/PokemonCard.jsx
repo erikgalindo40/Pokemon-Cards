@@ -25,6 +25,7 @@ function PokemonCard() {
         setPokeStyle('pokemon-card pokemon-card-yellow')
         break;
       default:
+        setPokeStyle('pokemon-card pokemon-card-other')
         break;
     }
   

@@ -22,7 +22,10 @@ function App() {
   const fetchPokemonTypeData = (index) => {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${index}`)
     .then(res=>res.json())
-    .then(data=>setPokemonTypeData(data))
+    .then(data=>{
+      console.log(data)
+      setPokemonTypeData(data)
+    })
     .catch(err=>console.error(err))
   }
 
