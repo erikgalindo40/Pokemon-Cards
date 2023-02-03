@@ -1,6 +1,7 @@
 
 import './App.css';
 import PokemonCard from './components/PokemonCard';
+import ChangePokemonButtons from './components/ChangePokemonButtons';
 import { useState, useEffect, createContext } from 'react';
 
 export const PokemonContext = createContext()
@@ -15,6 +16,7 @@ function App() {
     .then(res=>res.json())
     .then(data=>setPokemonGeneralData(data))
     .catch(err=>console.error(err))
+    console.log('returned')
   }
 
   const fetchPokemonTypeData = (index) => {
@@ -24,19 +26,14 @@ function App() {
     .catch(err=>console.error(err))
   }
 
-  useEffect(() => {
-    fetchPokemonGeneralData(pokeIndex)
-    fetchPokemonTypeData(pokeIndex)
-  }, [pokeIndex])
-
-  const onPrevious = (index) => {
+  const onClickPrevious = (index) => {
     if (index===1) {
       setPokeIndex(151)
     } else {
       setPokeIndex(parseInt(index-1))
     }
   }
-  const onNext = (index) => {
+  const onClickNext = (index) => {
     if (index===151) {
       setPokeIndex(1)
     } else {
@@ -44,12 +41,14 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    fetchPokemonGeneralData(pokeIndex)
+    fetchPokemonTypeData(pokeIndex)
+  }, [pokeIndex])
+
   return (
     <div className="app">
-      <div className="buttons-container">
-        <button className="change-index-button" onClick={()=>{onPrevious(pokeIndex)}}>PREVIOUS</button>
-        <button className="change-index-button" onClick={()=>{onNext(pokeIndex)}}>NEXT</button>
-      </div>
+      <ChangePokemonButtons index={pokeIndex} onNextPokemon={onClickNext} onPreviousPokemon={onClickPrevious} />
       <PokemonContext.Provider value={{pokemonGeneralData, pokemonTypeData}}>
         <PokemonCard />
       </PokemonContext.Provider>
