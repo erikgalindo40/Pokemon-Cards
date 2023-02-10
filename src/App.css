@@ -194,6 +194,9 @@ html, body {
 
   .pokemon-image {
     width: 23em;
+  }
+
+  .pokemon-image.pokemon-image-large {
     padding-inline: 5em;
   }
 

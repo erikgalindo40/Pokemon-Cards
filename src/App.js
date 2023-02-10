@@ -4,7 +4,7 @@ import PokemonCard from './components/PokemonCard';
 import ChangePokemonButtons from './components/ChangePokemonButtons';
 import { useState, useEffect, createContext } from 'react';
 import missingNoError from './assets/missingNoError.JPEG'
-// import whosThatPokemon from './assets/whosThatPokemon.jpg'
+import whosThatPokemon from './assets/whosThatPokemon.jpg'
 
 export const PokemonContext = createContext()
 
@@ -169,10 +169,17 @@ function App() {
     }
   }
 
+  const showLoading = () => {
+    // WHAT Shows page is loading to user
+    setPokemonGeneralData({sprites:{front_default: whosThatPokemon}, moves:[{move:{name:'Loading'}}]})
+    setPokemonTypeData({flavor_text_entries:[{flavor_text:'Please Wait'}]})
+  }
+
   useEffect(() => {
-    // WHAT Checks if data requested is already stored in User's Local Storage
+    // WHAT Sets 'loading up' information then checks if data requested is already stored in User's Local Storage
     //      If so, sets relevant state variables to equal Local Storage's objects
     //      If not, calls fetch functions to request data from PokeAPI
+    showLoading()
     if(localStorage.getItem(`GeneralData${pokeIndex}`)) {
       setPokemonGeneralData(JSON.parse(localStorage.getItem(`GeneralData${pokeIndex}`))) 
       setPokemonTypeData(JSON.parse(localStorage.getItem(`TypeData${pokeIndex}`))) 
