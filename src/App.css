@@ -228,11 +228,12 @@ html, body {
 .pokemon-move-info {
   display: flex;
   justify-content: space-between;
+  gap: 1em;
 }
 
 .pokemon-move-name {
   min-width: max-content;
-  padding-right: 1em;
+  /* padding-right: 1em; */
 }
 
 .pokemon-flavor-text {
@@ -254,7 +255,7 @@ html, body {
   }
 
   .pokemon-move-info {
-    gap: 2em;
+    gap: 1.5em;
   }
 
   .pokemon-flavor-text {

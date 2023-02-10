@@ -3,6 +3,8 @@ import './App.css';
 import PokemonCard from './components/PokemonCard';
 import ChangePokemonButtons from './components/ChangePokemonButtons';
 import { useState, useEffect, createContext } from 'react';
+import missingNoError from './assets/missingNoError.JPEG'
+// import whosThatPokemon from './assets/whosThatPokemon.jpg'
 
 export const PokemonContext = createContext()
 
@@ -10,28 +12,71 @@ function App() {
   const [pokemonGeneralData, setPokemonGeneralData] = useState({})
   const [pokemonTypeData, setPokemonTypeData] = useState({})
   const [pokeIndex, setPokeIndex] = useState(1)
+  
+  class GeneralDataObject {
+    constructor() {
+      this.stats = [{base_stat:''},{base_stat:''}]
+      this.sprites = {front_default:''}
+      this.height = 0
+      this.weight = 0
+      this.moves = [{move:{name:''}}]
+    }
+    addHealthStat(health) {
+      this.stats[0].base_stat = health
+    }
+    addPowerStat(power) {
+      this.stats[1].base_stat = power
+    }
+    addImage(sprite) {
+      this.sprites.front_default = sprite
+    }
+    addHeight(height) {
+      this.height = height
+    }
+    addWeight(weight) {
+      this.weight = weight
+    }
+    addMove(move) {
+      this.moves[0].move.name = move
+    }
+  }
+
+  class TypeDataObject {
+    constructor() {
+      this.names = Array(9)
+      this.genera = Array(8)
+      this.flavor_text_entries = [{flavor_text:''}]
+      this.color = {name:''}
+    }
+    addName(name) {
+      this.names[8] = {name: name}
+    }
+    addGenus(genus) {
+      this.genera[7] = {genus: genus}
+    }
+    addFlavorText(text) {
+      this.flavor_text_entries[0].flavor_text = text
+    }
+    addColor(color) {
+      this.color.name = color
+    }
+  }
 
   const createGeneralDataLocalStorage = (fetchedData, index) => {
     // WHAT Creates Local Storage Object(named GeneralData${index}), from fetchedData, by storing only the required/used prop values with the Index passed in as the key
     // WHY PokeAPI's Fair Use Policy asks to locally store data to reduce the total amount of requests the API receives
     // WHERE This function gets called in fetchPokemonGeneralData
+    
+    let newGeneralDataStorage = new GeneralDataObject()
+    
+    newGeneralDataStorage.addHealthStat(fetchedData.stats[0].base_stat)
+    newGeneralDataStorage.addPowerStat(fetchedData.stats[1].base_stat)
+    newGeneralDataStorage.addHeight(fetchedData.height)
+    newGeneralDataStorage.addWeight(fetchedData.weight)
+    newGeneralDataStorage.addMove(fetchedData.moves[0].move.name)
+    newGeneralDataStorage.addImage(fetchedData.sprites.front_default)
 
-    /*
-    pokemonGeneralData?.stats?.[0]?.base_stat
-    pokemonGeneralData?.stats?.[1]?.base_stat
-    pokemonGeneralData?.sprites?.front_default
-    pokemonGeneralData?.height
-    pokemonGeneralData?.weight
-    pokemonGeneralData?.moves?.[0]?.move?.name
-    */ 
-    let pokeGeneralStorage = {
-      stats: [{base_stat:fetchedData.stats[0].base_stat}, {base_stat:fetchedData.stats[1].base_stat}],
-      sprites:{front_default:fetchedData.sprites.front_default},
-      height:fetchedData.height,
-      weight:fetchedData.weight,
-      moves:[{move:{name:fetchedData.moves[0].move.name}}],
-    }
-    localStorage.setItem(`GeneralData${index}`, JSON.stringify(pokeGeneralStorage))
+    localStorage.setItem(`GeneralData${index}`, JSON.stringify(newGeneralDataStorage))
     return
   }
 
@@ -40,22 +85,14 @@ function App() {
     // WHY PokeAPI's Fair Use Policy asks to locally store data to reduce the total amount of requests the API receives
     // WHERE This function gets called in fetchPokemonTypeData
 
-    /*
-    pokemonTypeData?.names?.[8]?.name
-    pokemonTypeData?.genera?.[7]?.genus
-    pokemonTypeData?.flavor_text_entries?.[0]?.flavor_text
-    pokemonTypeData?.color?.name
-    */
-    let pokeTypeStorage = {
-      names:Array(9),
-      genera:Array(8),
-      flavor_text_entries:[{flavor_text:fetchedData.flavor_text_entries[0].flavor_text}],
-      color:{name:fetchedData.color.name},
-    }
-    pokeTypeStorage.names[8] = {name:fetchedData.names[8].name}
-    pokeTypeStorage.genera[7] = {genus:fetchedData.genera[7].genus}
+    let newTypeDataStorage = new TypeDataObject()
 
-    localStorage.setItem(`TypeData${index}`, JSON.stringify(pokeTypeStorage))
+    newTypeDataStorage.addName(fetchedData.names[8].name)
+    newTypeDataStorage.addGenus(fetchedData.genera[7].genus)
+    newTypeDataStorage.addFlavorText(fetchedData.flavor_text_entries[0].flavor_text)
+    newTypeDataStorage.addColor(fetchedData.color.name)
+
+    localStorage.setItem(`TypeData${index}`, JSON.stringify(newTypeDataStorage))
     return
   }
 
@@ -70,7 +107,16 @@ function App() {
       setPokemonGeneralData(data)
       createGeneralDataLocalStorage(data, pokeIndex)
     })
-    .catch(err=>console.error(err))
+    .catch(err=>{
+      setPokemonGeneralData({
+        stats: [{base_stat:'??'}, {base_stat:'??'}],
+        sprites:{front_default:missingNoError},
+        height: 0,
+        weight: 0,
+        moves:[{move:{name:'error'}}],
+      })
+      console.error(err)
+    })
   }
 
   const fetchPokemonTypeData = (index) => {
@@ -84,7 +130,15 @@ function App() {
       setPokemonTypeData(data)
       createTypeDataLocalStorage(data, pokeIndex)
     })
-    .catch(err=>console.error(err))
+    .catch(err=>{
+      setPokemonTypeData({
+        names:[0,1,2,3,4,5,6,7,{name:'MissingNo'}],
+        genera:[0,1,2,3,4,5,6,{genus:'Unknown Anomaly'}],
+        flavor_text_entries:[{flavor_text:'Retry Requesting Data Later'}],
+        color:{name:'purple'},
+      })
+      console.error(err)
+    })
   }
 
   const onClickPrevious = (index) => {
@@ -94,12 +148,13 @@ function App() {
     //     This function, along with onClickNext, keeps the pokeIndex variable between 1-151 to
     //     showcase the original 151 Pokemon
     // WHERE Passed into the ChangePokemonButtons Component as props
-    if (index===1) {
+    if (index<=1) {
       setPokeIndex(151)
     } else {
       setPokeIndex(parseInt(index-1))
     }
   }
+
   const onClickNext = (index) => {
     // WHAT Increments state variable pokeIndex By 1
     //      unless called while pokeIndex value is 151, it resets pokeIndex to 1
@@ -107,7 +162,7 @@ function App() {
     //     This function, along with onClickPrevious, keeps the pokeIndex variable between 1-151 to
     //     showcase the original 151 Pokemon
     // WHERE Passed into the ChangePokemonButtons Component as props
-    if (index===151) {
+    if (index>=151) {
       setPokeIndex(1)
     } else {
       setPokeIndex(parseInt(index+1))
