@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.9a359c95.css",
-    "main.js": "/static/js/main.d4ab28f4.js",
-    "static/media/missingNoError.JPEG": "/static/media/missingNoError.8dbfeaadaa928a859691.JPEG",
-    "static/media/whosThatPokemon.jpg": "/static/media/whosThatPokemon.e580753e5db45cbf3864.jpg",
-    "index.html": "/index.html",
-    "main.9a359c95.css.map": "/static/css/main.9a359c95.css.map",
-    "main.d4ab28f4.js.map": "/static/js/main.d4ab28f4.js.map"
+    "main.css": "/Pokemon-Cards/static/css/main.9a359c95.css",
+    "main.js": "/Pokemon-Cards/static/js/main.e8bb21d2.js",
+    "static/media/missingNoError.JPEG": "/Pokemon-Cards/static/media/missingNoError.8dbfeaadaa928a859691.JPEG",
+    "static/media/whosThatPokemon.jpg": "/Pokemon-Cards/static/media/whosThatPokemon.e580753e5db45cbf3864.jpg",
+    "index.html": "/Pokemon-Cards/index.html",
+    "main.9a359c95.css.map": "/Pokemon-Cards/static/css/main.9a359c95.css.map",
+    "main.e8bb21d2.js.map": "/Pokemon-Cards/static/js/main.e8bb21d2.js.map"
   },
   "entrypoints": [
     "static/css/main.9a359c95.css",
-    "static/js/main.d4ab28f4.js"
+    "static/js/main.e8bb21d2.js"
   ]
 }
