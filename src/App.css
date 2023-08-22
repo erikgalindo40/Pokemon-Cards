@@ -63,6 +63,33 @@ html, body {
 }
 
 /**************************
+      BACKROUND IMAGE
+**************************/
+.background-image {
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+}
+.background-image img {
+  height: 100dvh;
+  width: 100dvw;
+  background-size: cover;
+  vertical-align: top;
+  object-fit: cover;
+}
+.background-image::after {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.25);
+}
+/**************************
         POKEMON CARD 
 **************************/
 

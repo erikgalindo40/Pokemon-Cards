@@ -1,10 +1,10 @@
-
 import './App.css';
 import PokemonCard from './components/PokemonCard';
 import ChangePokemonButtons from './components/ChangePokemonButtons';
 import { useState, useEffect, createContext } from 'react';
 import missingNoError from './assets/missingNoError.JPEG'
 import whosThatPokemon from './assets/whosThatPokemon.jpg'
+import pokemaps from './assets/pokemaps.png'
 
 export const PokemonContext = createContext()
 
@@ -191,6 +191,7 @@ function App() {
 
   return (
     <div className="app">
+    <div className='background-image'><img src={pokemaps} alt="A birds-eye view of all the virtual pokemon regions placed onto one map" /></div>
       <ChangePokemonButtons index={pokeIndex} onNextPokemon={onClickNext} onPreviousPokemon={onClickPrevious} />
       <PokemonContext.Provider value={{pokemonGeneralData, pokemonTypeData}}>
         <PokemonCard />
