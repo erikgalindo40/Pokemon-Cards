@@ -8,6 +8,12 @@
 html, body {
   min-height: 100vh;
   min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  width: 100%;
 }
 
 .app {
@@ -16,8 +22,7 @@ html, body {
   justify-content: center;
   align-items: center;
   gap: 3em;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 150dvh;
   background-color: #2f2f2f;
   position: relative;
   z-index: 0;
@@ -26,10 +31,10 @@ html, body {
 :root {
   --pokemon-yellow: rgb(254,209,2);
   --pokemon-blue: blue;
-  --small-pokemon-card-width: 18em;
-  --small-pokemon-card-height: 25em;
-  --large-pokemon-card-width: 30em;
-  --large-pokemon-card-height: 45em;
+  --small-pokemon-card-width: 100%;
+  --small-pokemon-card-height: 100%;
+  --large-pokemon-card-width: 100%;
+  --large-pokemon-card-height: 100%;
 }
 
 /**************************
@@ -67,11 +72,12 @@ html, body {
 **************************/
 .background-image {
   position: absolute;
+  height: 100%;
   z-index: -1;
   overflow: hidden;
 }
 .background-image img {
-  height: 100dvh;
+  height: 100%;
   width: 100dvw;
   background-size: cover;
   vertical-align: top;
@@ -95,13 +101,11 @@ html, body {
 
 .pokemon-card {
   position: relative;
-  width: var(--small-pokemon-card-width);
-  height: var(--small-pokemon-card-height);
-  max-width: 85vw;
-
-  display: grid;
-  place-items: center;
-  grid-template-rows: 60% 1fr;
+  display: flex;
+  flex-direction: column;
+  padding-block: 2em;
+  margin-bottom: 5em;
+  max-width: min-content;
 }
 
 .pokemon-card.pokemon-card-red {
@@ -137,26 +141,14 @@ html, body {
 .pokemon-card::before {
   content: '';
   position: absolute;
+  top: -1rem;
+  left: -1rem;
   z-index: -1;
   height: calc(var(--small-pokemon-card-height) + 2em);
   width: calc(var(--small-pokemon-card-width) + 2em);
   background: var(--pokemon-yellow);
   border-radius: 20px;
-  max-width: 95vw;
 }
-
-@media (min-width: 600px) {
-  .pokemon-card {
-    height: var(--large-pokemon-card-height);
-    width: var(--large-pokemon-card-width);
-  }
-
-  .pokemon-card::before {
-    width: calc(var(--large-pokemon-card-width) + 3em);
-    height: calc(var(--large-pokemon-card-height) + 3em);
-  }
-}
-
 /**************************
     POKEMON CARD TOP HALF 
 **************************/
@@ -164,6 +156,8 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  padding-inline: 2em;
 }
 
 .pokemon-name-and-health {
@@ -182,7 +176,7 @@ html, body {
   color: white;
   place-self: center;
   position: relative;
-  width: 12em;
+  width: 100%;
 
   box-shadow: 9px 9px 12px black;
   border: 5px solid;
@@ -194,8 +188,6 @@ html, body {
 .pokemon-image img {
   position: relative;
   z-index: 1;
-  height: 100px;
-  width: 100%;
   object-fit: cover;
   vertical-align: middle;
 }
@@ -204,7 +196,6 @@ html, body {
   margin-top: .9em;
   background: rgb(192,140,41);
   background: linear-gradient(90deg, rgba(192,140,41,1) 0%, rgba(252,233,145,1) 52%, rgba(192,140,41,1) 100%);
-  max-width: 80%;
   font-size: .7rem;
   font-weight: 500;
   align-self: center;
@@ -218,22 +209,11 @@ html, body {
   .pokemon-name-and-health {
     font-size: 1.7rem;
   }
-
-  .pokemon-image {
-    width: 23em;
-  }
-
-  .pokemon-image.pokemon-image-large {
-    padding-inline: 5em;
-  }
-
   .pokemon-image img {
     height: 200px;
   }
-
   .pokemon-stats {
     padding-block: .3em;
-    padding-inline: 1.5em;
     font-size: .85rem;
   }
 }
@@ -263,7 +243,6 @@ html, body {
 
 .pokemon-move-name {
   min-width: max-content;
-  /* padding-right: 1em; */
 }
 
 .pokemon-flavor-text {
@@ -281,7 +260,6 @@ html, body {
 @media (min-width: 600px) {
   .pokemon-card-bottom-half {
     font-size: 2.1rem;
-    padding-inline: 2.5em;
   }
 
   .pokemon-move-info {
